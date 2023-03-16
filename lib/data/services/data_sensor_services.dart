@@ -4,17 +4,17 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-Uri domain = Uri.parse("http://194.59.165.32:8081/getDataCanti");
+Uri domain = Uri.parse("http://server.isi-net.org:8081/petengoran/latest");
 
 class DataSensorService {
-  static Future<ApiReturnValue<List<Result>>> index() async {
+  static Future<ApiReturnValue<List<DataSensor>>> index() async {
     try {
       final responseResult = await http.get(Uri.parse(domain.toString()));
       final jsonResult = json.decode(responseResult.body);
-      final List<Result> dataSensor = [
+      final List<DataSensor> dataSensor = [
         (responseResult.statusCode == 200)
-            ? Result.fromJson(jsonResult)
-            : Result(),
+            ? DataSensor.fromJson(jsonResult)
+            : DataSensor(),
       ];
       if (responseResult.statusCode == 200) {
         return ApiReturnValue(value: dataSensor);
@@ -27,4 +27,5 @@ class DataSensorService {
       return ApiReturnValue(message: "terjadi kesalahan pada server");
     }
   }
-}*/
+}
+*/

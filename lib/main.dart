@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
@@ -15,6 +16,8 @@ import 'dart:async';
 import 'package:untitled/notification/notification_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'notification/notif.dart';
 import 'ui/widgets/widget.dart';
@@ -38,6 +41,11 @@ Future<void> main() async {
     await initializeService();
   }
   runApp(const MyApp());
+
+  var url = Uri.http('server.isi-net.org', 'petengoran/latest');
+  var response = await http.get(url);
+  var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+  debugPrint(jsonResponse.toString());
 }
 
 class MainPage extends StatefulWidget {
