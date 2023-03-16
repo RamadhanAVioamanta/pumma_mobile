@@ -56,7 +56,7 @@ class _DataPageState extends State<DataPage> {
     try {
       await client2.connect();
       debugPrint("MQTT Connected");
-      client2.subscribe('test_topic', MqttQos.atLeastOnce);
+      client2.subscribe('pumma/petengoran', MqttQos.atLeastOnce);
     } catch (e) {
       debugPrint(e.toString());
       client2.disconnect();
