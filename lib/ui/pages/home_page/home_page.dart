@@ -3,6 +3,7 @@ import 'package:untitled/core/app_color.dart';
 import 'package:untitled/ui/pages/chart/chart_page.dart';
 import 'package:untitled/ui/pages/photo/photo.dart';
 import 'package:untitled/ui/pages/webview/webview_page.dart';
+import 'package:untitled/ui/widgets/widget.dart';
 
 import '../all/data/data_page.dart';
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage>
         centerTitle: false,
         bottom: PreferredSize(
           preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height / 6),
+              Size.fromHeight(MediaQuery.of(context).size.height / 12),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +58,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               /*GestureDetector(
                 onTap: () {
                   BottomSheetHelper.rounded(
@@ -94,6 +96,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
               ),*/
+
               TabBar(
                 controller: tabController,
                 isScrollable: false,

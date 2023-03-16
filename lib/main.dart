@@ -159,15 +159,14 @@ class _MainPageState extends State<MainPage> {
                     ),
                     child: Center(
                       child: Container(
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            LogoAplikasi,
                             Text(
-                              ' EWS Krakatau',
+                              ' Early Warning System Gunung Anak Krakatau',
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 14,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
                           ],

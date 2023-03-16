@@ -39,7 +39,7 @@ class _PetengoranPageState extends State<PetengoranPage>
         centerTitle: false,
         bottom: PreferredSize(
           preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height / 6),
+              Size.fromHeight(MediaQuery.of(context).size.height / 12),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,6 +59,7 @@ class _PetengoranPageState extends State<PetengoranPage>
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               /*GestureDetector(
                 onTap: () {
                   BottomSheetHelper.rounded(
