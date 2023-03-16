@@ -10,14 +10,14 @@ import 'package:untitled/core/app_color.dart';
 import 'package:untitled/ui/pages/all/widgets/data_wrapper_widget.dart';
 import 'package:untitled/notification/notification_service.dart';
 
-class DataPage extends StatefulWidget {
-  const DataPage({Key? key}) : super(key: key);
+class DataPagePetengoran extends StatefulWidget {
+  const DataPagePetengoran({Key? key}) : super(key: key);
 
   @override
-  State<DataPage> createState() => _DataPageState();
+  State<DataPagePetengoran> createState() => _DataPagePetengoranState();
 }
 
-class _DataPageState extends State<DataPage> {
+class _DataPagePetengoranState extends State<DataPagePetengoran> {
   RxList<WaterLevel> dataWaterLevel = <WaterLevel>[].obs;
   RxList<WaterLevel> dataBatteryVoltage = <WaterLevel>[].obs;
   RxList<WaterLevel> dataSuhu = <WaterLevel>[].obs;
@@ -56,7 +56,7 @@ class _DataPageState extends State<DataPage> {
     try {
       await client2.connect();
       debugPrint("MQTT Connected");
-      client2.subscribe('pummamqtt/canti', MqttQos.atLeastOnce);
+      client2.subscribe('pumma/petengoran', MqttQos.atLeastOnce);
     } catch (e) {
       debugPrint(e.toString());
       client2.disconnect();

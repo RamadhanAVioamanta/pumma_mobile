@@ -9,6 +9,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:untitled/ui/pages/home_page/home_page.dart';
+import 'package:untitled/ui/pages/home_page/petengoran_page.dart';
 import 'package:untitled/ui/pages/splash/splash_page.dart';
 import 'dart:async';
 import 'package:untitled/notification/notification_service.dart';
@@ -158,15 +159,14 @@ class _MainPageState extends State<MainPage> {
                     ),
                     child: Center(
                       child: Container(
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            LogoAplikasi,
                             Text(
-                              ' EWS Krakatau',
+                              ' Early Warning System Gunung Anak Krakatau',
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 14,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
                           ],
@@ -194,7 +194,7 @@ class _MainPageState extends State<MainPage> {
                         assetImage: "assets/app_logo.png",
                         title: "PUMMA Patengoran",
                         onTap: () {
-                          Get.to(() => HomePage());
+                          Get.to(() => PetengoranPage());
                         },
                       ),
                     ]),
