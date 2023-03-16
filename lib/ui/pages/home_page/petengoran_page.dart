@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/core/app_color.dart';
+import 'package:untitled/ui/pages/all/data/data_page_petengoran.dart';
 import 'package:untitled/ui/pages/chart/chart_page.dart';
+import 'package:untitled/ui/pages/chart/chart_page_petengoran.dart';
 import 'package:untitled/ui/pages/photo/photo.dart';
 import 'package:untitled/ui/pages/webview/webview_page.dart';
 
 import '../all/data/data_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class PetengoranPage extends StatefulWidget {
+  const PetengoranPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PetengoranPage> createState() => _PetengoranPageState();
 }
 
-class _HomePageState extends State<HomePage>
+class _PetengoranPageState extends State<PetengoranPage>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
 
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage>
                 child: Padding(
                   padding: EdgeInsets.only(left: 24),
                   child: Text(
-                    'Dashboard Canti',
+                    'Dashboard Petengoran',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: Colors.white,
@@ -160,8 +162,8 @@ class _HomePageState extends State<HomePage>
         children: const [
           // TODO: Uncomment this for preview empty
           // EmptyPage(),
-          DataPage(),
-          ChartPage(),
+          DataPagePetengoran(),
+          ChartPagePetengoran(),
           PhotoPage(),
           WebViewPage(),
         ],

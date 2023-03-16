@@ -9,7 +9,7 @@ import 'package:untitled/data/models/server/data.dart';
 import 'package:untitled/data/models/server/water_level.dart';
 import 'package:untitled/data/network/mqtt_client.dart';
 
-class CartController extends GetxController {
+class ChartControllerPetengoran extends GetxController {
   String tag = 'CartController::->';
   final client = MqttNetwork.client();
 
@@ -28,7 +28,7 @@ class CartController extends GetxController {
       await client.connect();
 
       // TODO: Add Here if have another data
-      client.subscribe('pummamqtt/canti', MqttQos.atLeastOnce);
+      client.subscribe('pumma/petengoran', MqttQos.atLeastOnce);
       loadWaterLevel();
       loadBatteryVoltage();
       loadForecast();
