@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -42,7 +41,7 @@ Future<void> main() async {
   }
   runApp(const MyApp());
 
-  var url = Uri.http('server.isi-net.org', 'petengoran/latest');
+  var url = Uri.http('server.isi-net.org/petengoran/latest');
   var response = await http.get(url);
   var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
   debugPrint(jsonResponse.toString());
