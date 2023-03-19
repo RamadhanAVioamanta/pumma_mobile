@@ -3,6 +3,7 @@ import 'package:untitled/core/app_color.dart';
 import 'package:untitled/ui/pages/all/data/data_page_petengoran.dart';
 import 'package:untitled/ui/pages/chart/chart_page.dart';
 import 'package:untitled/ui/pages/chart/chart_page_petengoran.dart';
+import 'package:untitled/ui/pages/historical/historical_page_petengoran.dart';
 import 'package:untitled/ui/pages/photo/photo.dart';
 import 'package:untitled/ui/pages/webview/webview_page.dart';
 
@@ -22,7 +23,7 @@ class _PetengoranPageState extends State<PetengoranPage>
   @override
   void initState() {
     // connectClientMtqq();
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
 
@@ -134,9 +135,18 @@ class _PetengoranPageState extends State<PetengoranPage>
                   ),
                   Tab(
                     child: Text(
+                      'Historical Chart',
+                      style: TextStyle(
+                          color: (tabController?.index == 3)
+                              ? Colors.black
+                              : Colors.white),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
                       'Photo',
                       style: TextStyle(
-                          color: (tabController?.index == 2)
+                          color: (tabController?.index == 4)
                               ? Colors.black
                               : Colors.white),
                     ),
@@ -145,7 +155,7 @@ class _PetengoranPageState extends State<PetengoranPage>
                     child: Text(
                       'Maps',
                       style: TextStyle(
-                        color: (tabController?.index == 3)
+                        color: (tabController?.index == 5)
                             ? Colors.black
                             : Colors.white,
                       ),
@@ -165,6 +175,7 @@ class _PetengoranPageState extends State<PetengoranPage>
           // EmptyPage(),
           DataPagePetengoran(),
           ChartPagePetengoran(),
+          HistoricalPagePetengoran(),
           PhotoPage(),
           WebViewPage(),
         ],
