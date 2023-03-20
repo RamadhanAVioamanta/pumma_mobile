@@ -1,6 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled/data/models/server/data.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+DateTime now = DateTime.now();
+Timer? timer;
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -11,47 +19,34 @@ class HistoricalPageCanti extends StatefulWidget {
 
 class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
-  final List<Map> _books = [
-    {
-      "DATETIME": "2023-03-20T11:22:50",
-      "TS": "11:22:50",
-      "Date": "2023-03-20",
-      "tinggi": 38.55,
-      "tegangan": 13.43,
-      "suhu": 55.3,
-      "frcst30": 35.15,
-      "frcst300": 89.48,
-      "rms": 49.23,
-      "threshold": 443.07,
-      "status": "SAFE"
-    },
-    {
-      "DATETIME": "2023-03-20T11:34:59",
-      "TS": "11:34:59",
-      "Date": "2023-03-20",
-      "tinggi": 67.36,
-      "tegangan": 13.39,
-      "suhu": 54.8,
-      "frcst30": 56.91,
-      "frcst300": 63.13,
-      "rms": 56.33,
-      "threshold": 506.97,
-      "status": "SAFE"
-    },
-    {
-      "DATETIME": "2023-03-20T11:35:00",
-      "TS": "11:35:00",
-      "Date": "2023-03-20",
-      "tinggi": 59.1,
-      "tegangan": 13.39,
-      "suhu": 54.8,
-      "frcst30": 54.21,
-      "frcst300": 63.03,
-      "rms": 56.06,
-      "threshold": 504.54,
-      "status": "SAFE"
-    },
-  ];
+  var dataJson = [];
+
+  Future<List> getHttp() async {
+    var url = Uri.parse('https://vps.isi-net.org/api/petengoran/latest');
+    var response = await http.read(url);
+    var jsonResponse = jsonDecode(response);
+    debugPrint(jsonResponse['result'].toString());
+    dataJson = jsonResponse['result'];
+    return jsonResponse['result'];
+  }
+
+  @override
+  void initState() {
+    timer = Timer.periodic(const Duration(seconds: 1), updateDataSource);
+    timer;
+    super.initState();
+    getHttp();
+  }
+
+  void updateDataSource(Timer timer) {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,21 +59,28 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
 
   List<DataColumn> _createColumns() {
     return [
-      DataColumn(label: Text('Tanggal')),
-      DataColumn(label: Text('Waktu')),
+      DataColumn(label: Text('Tanggal & Waktu')),
       DataColumn(label: Text('Ketinggian Air')),
       DataColumn(label: Text('Forecasting Ketinggian Air(30)'))
     ];
   }
 
   List<DataRow> _createRows() {
-    return _books
-        .map((book) => DataRow(cells: [
-              DataCell(Text(book['Date'])),
-              DataCell(Text(book['TS'])),
-              DataCell(Text(book['tinggi'].toString())),
-              DataCell(Text(book['frcst30'].toString()))
+    return dataJson
+        .map((data) => DataRow(cells: [
+              DataCell(Text(dateTimeParse(data['datetime']))),
+              DataCell(Text(data['waterlevel'].toString())),
+              DataCell(Text(data['forecast30'].toString()))
             ]))
         .toList();
   }
+}
+
+String dateTimeParse(date) {
+  DateTime parseDate =
+      new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
+  var inputDate = DateTime.parse(parseDate.toString());
+  var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+  var outputDate = outputFormat.format(inputDate);
+  return outputDate;
 }
