@@ -21,7 +21,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
   var dataJson = [];
 
-  Future<List> getHttp() async {
+  Future<List> getHttp100() async {
     var url = Uri.parse('https://vps.isi-net.org/api/petengoran/latest');
     var response = await http.read(url);
     var jsonResponse = jsonDecode(response);
@@ -35,7 +35,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     timer = Timer.periodic(const Duration(seconds: 1), updateDataSource);
     timer;
     super.initState();
-    getHttp();
+    getHttp100();
   }
 
   void updateDataSource(Timer timer) {
