@@ -13,7 +13,6 @@ DateTime now = DateTime.now();
 Timer? timer;
 
 List<dataAPI> API = [];
-bool loading = true;  
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -25,7 +24,6 @@ class HistoricalPageCanti extends StatefulWidget {
 class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
   
-  final TextEditingController historyController = TextEditingController();
   void getData() async {
     var response = await http.get(
         Uri.parse("https://vps.isi-net.org/api/panjang/count/200"),
@@ -33,7 +31,6 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     List data = json.decode(response.body)['result'];
     setState(() {
       API = dataAPIFromJson(data);
-      loading = false;
     });
   }
 
@@ -65,7 +62,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
       charts.Series<dataAPI, DateTime>(
         data: API,
         id: 'Water',  
-        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault  ,
         domainFn: (dataAPI DataApi, _) => DataApi.datetime,
         measureFn: (dataAPI DataApi, _) => DataApi.waterlevel.round(),
       )
@@ -97,7 +94,7 @@ DataTable _createDataTable() {
       DataColumn(
         label: Container(
           width: 80,
-          child: Text(
+          child: const Text(
             'Tanggal & Waktu',
             softWrap: true,
             textAlign: TextAlign.center,
@@ -107,7 +104,7 @@ DataTable _createDataTable() {
       DataColumn(
         label: Container(
           width: 80,
-          child: Text(
+          child: const Text(
             'Ketinggian Air',
             softWrap: true,
             textAlign: TextAlign.center,
@@ -117,7 +114,7 @@ DataTable _createDataTable() {
       DataColumn(
         label: Container(
         width: 80,
-        child: Text(
+        child: const Text(
           'Forecast 30',
           softWrap: true,
           textAlign: TextAlign.center
