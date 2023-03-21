@@ -40,6 +40,7 @@ dependencies:
   flutter_background_service_android: ^3.0.3
   flutter_bloc: ^8.1.1
   universal_platform: ^1.0.0+1
+  charts_flutter: ^0.12.0
 
 dev_dependencies:
   flutter_test:
