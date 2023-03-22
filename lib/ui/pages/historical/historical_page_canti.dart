@@ -12,6 +12,7 @@ import 'data_modeling/api_historicalDataModel.dart';
 DateTime now = DateTime.now();
 Timer? timer;
 List data = [];
+DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
 
 class HistoricalPageCanti extends StatefulWidget {
@@ -25,12 +26,13 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
   void getData() async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/panjang/time/1?timer=hour"),
+        Uri.parse("https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
         headers: {"Accept": "application/json"});
     debugPrint(response.body);
     List data = json.decode(response.body)['result'];
     setState(() {
       historyData = dataAPIFromJson(data);
+      _data = MyData();
     });
   }
 
@@ -68,8 +70,6 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     ];
   }
 
-  final DataTableSource _data = MyData();
-
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -79,7 +79,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
             _createSampleData(),
             animate: false,
           )),
-      SingleChildScrollView(
+      Center(
         //scrollDirection: Axis.horizontal,
         child: PaginatedDataTable(
           columnSpacing: 100,
@@ -88,14 +88,21 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
             DataColumn(
                 label: Center(
                     child: Text(
-              'Datetime',
-              textAlign: TextAlign.center,
+              'Date & Time',
+              textAlign: TextAlign.right,
             ))),
-            DataColumn(label: Text('WaterLevel'))
+            DataColumn(label: Text('Water Level'))
           ],
           rowsPerPage: 8,
         ),
-      )
+      ),
+      Container(
+          child: TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              child: const Text('Refresh'),
+              onPressed: getData))
     ]);
   }
 }
@@ -129,20 +136,3 @@ class MyData extends DataTableSource {
   // TODO: implement selectedRowCount
   int get selectedRowCount => 0;
 }
-    /*historyData
-        .map((data) => DataRow(cells: [
-              DataCell(Container(
-                width: 150,
-                child: Text(
-                    textAlign: TextAlign.center,
-                    DateFormat('MM/dd/yyyy hh:mm a').format(data.datetime)),
-              )),
-              DataCell(Container(
-                width: 150,
-                child: Text(
-                    textAlign: TextAlign.center, data.waterlevel.toString()),
-              )),
-            ]))
-        .toList();
-  }
-} */
