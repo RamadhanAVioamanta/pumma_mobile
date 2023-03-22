@@ -41,11 +41,6 @@ Future<void> main() async {
     await initializeService();
   }
   runApp(const MyApp());
-
-  var url = Uri.parse('http://server.isi-net.org:8081/petengoran/latest');
-  var response = await http.read(url);
-  var jsonResponse = jsonDecode(response) as Map<String, dynamic>;
-  debugPrint(jsonResponse.toString());
 }
 
 class MainPage extends StatefulWidget {

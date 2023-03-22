@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,8 @@ import 'data_modeling/api_historicalDataModel.dart';
 
 DateTime now = DateTime.now();
 Timer? timer;
-
-List<historycalModel> historyData = [];
+List data = [];
+List<historycalModel> historyData = dataAPIFromJson(data);
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -24,8 +25,9 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
   void getData() async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
+        Uri.parse("https://vps.isi-net.org/api/panjang/time/1?timer=hour"),
         headers: {"Accept": "application/json"});
+    debugPrint(response.body);
     List data = json.decode(response.body)['result'];
     setState(() {
       historyData = dataAPIFromJson(data);
@@ -66,51 +68,68 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     ];
   }
 
+  final DataTableSource _data = MyData();
+
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
+    return Column(children: [
       SizedBox(
-          height: 300,
+          height: 120,
           child: charts.TimeSeriesChart(
             _createSampleData(),
             animate: false,
           )),
       SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: _createDataTable(),
+        //scrollDirection: Axis.horizontal,
+        child: PaginatedDataTable(
+          columnSpacing: 100,
+          source: _data,
+          columns: const [
+            DataColumn(
+                label: Center(
+                    child: Text(
+              'Datetime',
+              textAlign: TextAlign.center,
+            ))),
+            DataColumn(label: Text('WaterLevel'))
+          ],
+          rowsPerPage: 8,
+        ),
       )
     ]);
   }
+}
 
-  DataTable _createDataTable() {
-    return DataTable(columns: _createColumns(), rows: _createRows());
+class MyData extends DataTableSource {
+  final List<Map<String, dynamic>> _data = List.generate(
+      historyData.length,
+      (index) => {
+            "datetime": DateFormat('MM/dd/yyyy hh:mm a')
+                .format(historyData[index].datetime),
+            "waterlevel": historyData[index].waterlevel
+          });
+
+  @override
+  DataRow? getRow(int index) {
+    return DataRow(cells: [
+      DataCell(Text(_data[index]["datetime"].toString())),
+      DataCell(Text(_data[index]["waterlevel"].toString())),
+    ]);
   }
 
-  List<DataColumn> _createColumns() {
-    return [
-      DataColumn(
-          label: Container(
-        width: 150,
-        child: const Text(
-          'Tanggal & Waktu',
-          softWrap: true,
-          textAlign: TextAlign.center,
-        ),
-      )),
-      DataColumn(
-        label: Container(
-            width: 150,
-            child: const Text(
-              'Ketinggian Air',
-              softWrap: true,
-              textAlign: TextAlign.center,
-            )),
-      ),
-    ];
-  }
+  @override
+  // TODO: implement isRowCountApproximate
+  bool get isRowCountApproximate => false;
 
-  List<DataRow> _createRows() {
-    return historyData
+  @override
+  // TODO: implement rowCount
+  int get rowCount => _data.length;
+
+  @override
+  // TODO: implement selectedRowCount
+  int get selectedRowCount => 0;
+}
+    /*historyData
         .map((data) => DataRow(cells: [
               DataCell(Container(
                 width: 150,
@@ -126,4 +145,4 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
             ]))
         .toList();
   }
-}
+} */
