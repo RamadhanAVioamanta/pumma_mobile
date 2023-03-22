@@ -6,13 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'data_modeling/restDataModel.dart';
-
+import 'data_modeling/api_historicalDataModel.dart';
 
 DateTime now = DateTime.now();
 Timer? timer;
 
-List<dataAPI> API = [];
+List<historycalModel> historyData = [];
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -23,14 +22,13 @@ class HistoricalPageCanti extends StatefulWidget {
 
 class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
-  
   void getData() async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/panjang/count/200"),
+        Uri.parse("https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
         headers: {"Accept": "application/json"});
     List data = json.decode(response.body)['result'];
     setState(() {
-      API = dataAPIFromJson(data);
+      historyData = dataAPIFromJson(data);
     });
   }
 
@@ -53,18 +51,17 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   }
 
   // CREATE CHART BY DATA FROM REST-API
-  
-  
+
   // ---------------
-  List<charts.Series<dataAPI, DateTime>> _createSampleData() {
+  List<charts.Series<historycalModel, DateTime>> _createSampleData() {
     return [
       //charts.Series memiliki 4 paramter wajib
-      charts.Series<dataAPI, DateTime>(
-        data: API,
-        id: 'Water',  
-        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault  ,
-        domainFn: (dataAPI DataApi, _) => DataApi.datetime,
-        measureFn: (dataAPI DataApi, _) => DataApi.waterlevel.round(),
+      charts.Series<historycalModel, DateTime>(
+        data: historyData,
+        id: 'Water',
+        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        domainFn: (historycalModel DataApi, _) => DataApi.datetime,
+        measureFn: (historycalModel DataApi, _) => DataApi.waterlevel.round(),
       )
     ];
   }
@@ -72,87 +69,60 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-        SizedBox(
+      SizedBox(
           height: 300,
           child: charts.TimeSeriesChart(
             _createSampleData(),
             animate: false,
-        )),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: _createDataTable(),
-        ) 
-      ]);
+          )),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: _createDataTable(),
+      )
+    ]);
   }
 
-DataTable _createDataTable() {
+  DataTable _createDataTable() {
     return DataTable(columns: _createColumns(), rows: _createRows());
   }
 
   List<DataColumn> _createColumns() {
     return [
       DataColumn(
-        label: Container(
-          width: 80,
-          child: const Text(
-            'Tanggal & Waktu',
-            softWrap: true,
-            textAlign: TextAlign.center,
-          ),
-        )
-      ),
-      DataColumn(
-        label: Container(
-          width: 80,
-          child: const Text(
-            'Ketinggian Air',
-            softWrap: true,
-            textAlign: TextAlign.center,
-          )
-        ),
-      ),
-      DataColumn(
-        label: Container(
-        width: 80,
+          label: Container(
+        width: 150,
         child: const Text(
-          'Forecast 30',
+          'Tanggal & Waktu',
           softWrap: true,
-          textAlign: TextAlign.center
-          )
-        )
-      )
+          textAlign: TextAlign.center,
+        ),
+      )),
+      DataColumn(
+        label: Container(
+            width: 150,
+            child: const Text(
+              'Ketinggian Air',
+              softWrap: true,
+              textAlign: TextAlign.center,
+            )),
+      ),
     ];
   }
 
   List<DataRow> _createRows() {
-    return API
+    return historyData
         .map((data) => DataRow(cells: [
-              DataCell(
-                Container(
-                  width: 80,
-                  child: Text(
-                    textAlign: TextAlign.center, 
-                    DateFormat('MM/dd/yyyy hh:mm a').format(data.datetime)
-                  ),
-                )
-              ),
-              DataCell(
-                Container(
-                  width: 80,
-                  child: Text(
-                    textAlign: TextAlign.center, 
-                    data.waterlevel.toString()
-                  ),
-                )
-              ),
-              DataCell(
-                  Container(
-                    width: 80,
-                    child: Text(textAlign: TextAlign.center, 
-                    data.forecast30.toString()
-                                  ),
-                  )
-              )
+              DataCell(Container(
+                width: 150,
+                child: Text(
+                    textAlign: TextAlign.center,
+                    DateFormat('MM/dd/yyyy hh:mm a').format(data.datetime)),
+              )),
+              DataCell(Container(
+                width: 150,
+                child: Text(
+                    textAlign: TextAlign.center, data.waterlevel.toString()),
+              )),
             ]))
         .toList();
   }
