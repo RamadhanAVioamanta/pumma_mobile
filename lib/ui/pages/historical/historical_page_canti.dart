@@ -24,10 +24,13 @@ class HistoricalPageCanti extends StatefulWidget {
 
 class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
+  bool _isLoading = true;
+
   void getData() async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
+        Uri.parse("https://vps.isi-net.org/api/panjang/time/1?timer=minute"),
         headers: {"Accept": "application/json"});
+    _isLoading = false;
     debugPrint(response.body);
     List data = json.decode(response.body)['result'];
     setState(() {
@@ -72,28 +75,48 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       SizedBox(
           height: 120,
           child: charts.TimeSeriesChart(
             _createSampleData(),
             animate: false,
+            domainAxis: const charts.DateTimeAxisSpec(
+              tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+                hour: charts.TimeFormatterSpec(
+                  format: 'hh:mm',
+                  transitionFormat: 'hh:mm',
+                ),
+                day: charts.TimeFormatterSpec(
+                  format: 'dd MMM',
+                  transitionFormat: 'dd MMM',
+                ),
+              ),
+            ),
           )),
-      Center(
-        //scrollDirection: Axis.horizontal,
-        child: PaginatedDataTable(
-          columnSpacing: 100,
-          source: _data,
-          columns: const [
-            DataColumn(
-                label: Center(
-                    child: Text(
-              'Date & Time',
-              textAlign: TextAlign.right,
-            ))),
-            DataColumn(label: Text('Water Level'))
-          ],
-          rowsPerPage: 8,
+      Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: PaginatedDataTable(
+            source: _data,
+            horizontalMargin: 20,
+            dataRowHeight: 39,
+            columns: const [
+              DataColumn(
+                  label: Expanded(
+                      child: Text(
+                'Date',
+                textAlign: TextAlign.center,
+              ))),
+              DataColumn(
+                  label: Expanded(
+                      child: Text('Time', textAlign: TextAlign.center))),
+              DataColumn(
+                  label: Expanded(
+                      child: Text('Water Level', textAlign: TextAlign.center)))
+            ],
+            rowsPerPage: 10,
+          ),
         ),
       ),
       Container(
@@ -101,8 +124,15 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
               style: TextButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20),
               ),
-              child: const Text('Refresh'),
-              onPressed: getData))
+              child: !_isLoading
+                  ? const Text('Refresh')
+                  : const CircularProgressIndicator(),
+              onPressed: () async {
+                setState(() {
+                  _isLoading = true;
+                });
+                getData();
+              }))
     ]);
   }
 }
@@ -111,15 +141,17 @@ class MyData extends DataTableSource {
   final List<Map<String, dynamic>> _data = List.generate(
       historyData.length,
       (index) => {
-            "datetime": DateFormat('MM/dd/yyyy hh:mm a')
-                .format(historyData[index].datetime),
+            "date":
+                DateFormat('MM/dd/yyyy').format(historyData[index].datetime),
+            "time": DateFormat('hh:mm a').format(historyData[index].datetime),
             "waterlevel": historyData[index].waterlevel
           });
 
   @override
   DataRow? getRow(int index) {
     return DataRow(cells: [
-      DataCell(Text(_data[index]["datetime"].toString())),
+      DataCell(Text(_data[index]["date"].toString())),
+      DataCell(Text(_data[index]["time"].toString())),
       DataCell(Text(_data[index]["waterlevel"].toString())),
     ]);
   }
