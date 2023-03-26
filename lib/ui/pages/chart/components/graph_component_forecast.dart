@@ -54,7 +54,7 @@ class GraphComponentForecast extends StatelessWidget {
                       dataSource: chartData,
                       color: Color.fromARGB(255, 255, 0, 102),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
-                      yValueMapper: (WaterLevel data, _) => data.frcst300,
+                      yValueMapper: (WaterLevel data, _) => data.frcst30,
                     ),
                     // dataLabelSettings: DataLabelSettings(isVisible: true)),
                   ],

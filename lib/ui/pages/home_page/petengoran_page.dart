@@ -136,7 +136,9 @@ class _PetengoranPageState extends State<PetengoranPage>
                   Tab(
                     child: Text(
                       'Historical Chart',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                          fontSize: 13,
                           color: (tabController?.index == 3)
                               ? Colors.black
                               : Colors.white),

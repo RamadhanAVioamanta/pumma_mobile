@@ -28,7 +28,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
 
   void getData() async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/panjang/time/1?timer=minute"),
+        Uri.parse("https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
         headers: {"Accept": "application/json"});
     _isLoading = false;
     debugPrint(response.body);
@@ -41,20 +41,8 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
 
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(seconds: 1), updateDataSource);
-    timer;
     super.initState();
     getData();
-  }
-
-  void updateDataSource(Timer timer) {
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
   }
 
   // CREATE CHART BY DATA FROM REST-API
@@ -84,8 +72,8 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
             domainAxis: const charts.DateTimeAxisSpec(
               tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
                 hour: charts.TimeFormatterSpec(
-                  format: 'hh:mm',
-                  transitionFormat: 'hh:mm',
+                  format: 'hh:mm:ss',
+                  transitionFormat: 'hh:mm:ss',
                 ),
                 day: charts.TimeFormatterSpec(
                   format: 'dd MMM',
@@ -143,7 +131,8 @@ class MyData extends DataTableSource {
       (index) => {
             "date":
                 DateFormat('MM/dd/yyyy').format(historyData[index].datetime),
-            "time": DateFormat('hh:mm a').format(historyData[index].datetime),
+            "time":
+                DateFormat('hh:mm:ss a').format(historyData[index].datetime),
             "waterlevel": historyData[index].waterlevel
           });
 

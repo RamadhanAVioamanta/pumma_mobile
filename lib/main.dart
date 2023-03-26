@@ -188,14 +188,14 @@ class _MainPageState extends State<MainPage> {
                       // cardmenu digunakan untuk membuat widget yang berisi gambar judul dan sebuath fungsi ketika widget ini di tekan
                       CardMenu(
                         assetImage: "assets/app_logo.png",
-                        title: "PUMMA Canti",
+                        title: "PUMMA U-TEWS Panjang",
                         onTap: () {
                           Get.to(() => HomePage());
                         },
                       ),
                       CardMenu(
                         assetImage: "assets/app_logo.png",
-                        title: "PUMMA Patengoran",
+                        title: "PUMMA U-TEWS Petengoran",
                         onTap: () {
                           Get.to(() => PetengoranPage());
                         },
@@ -248,6 +248,7 @@ class CardMenu extends StatelessWidget {
                 ),
                 Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.grey,
                       fontSize: 12,

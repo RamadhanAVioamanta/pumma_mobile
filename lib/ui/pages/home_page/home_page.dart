@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage>
                 child: Padding(
                   padding: EdgeInsets.only(left: 24),
                   child: Text(
-                    'Dashboard Canti',
+                    'Dashboard Panjang',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: Colors.white,
@@ -136,7 +136,9 @@ class _HomePageState extends State<HomePage>
                   Tab(
                     child: Text(
                       'Historical Chart',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                          fontSize: 13,
                           color: (tabController?.index == 2)
                               ? Colors.black
                               : Colors.white),
