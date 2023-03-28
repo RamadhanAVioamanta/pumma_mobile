@@ -6,6 +6,7 @@ import 'package:untitled/ui/pages/webview/webview_page.dart';
 import 'package:untitled/ui/widgets/widget.dart';
 
 import '../all/data/data_page.dart';
+import '../historical/historical_page_canti.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     // connectClientMtqq();
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
 
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage>
                 child: Padding(
                   padding: EdgeInsets.only(left: 24),
                   child: Text(
-                    'Dashboard Canti',
+                    'Dashboard Panjang',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: Colors.white,
@@ -134,9 +135,20 @@ class _HomePageState extends State<HomePage>
                   ),
                   Tab(
                     child: Text(
+                      'Historical Chart',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: (tabController?.index == 2)
+                              ? Colors.black
+                              : Colors.white),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
                       'Photo',
                       style: TextStyle(
-                          color: (tabController?.index == 2)
+                          color: (tabController?.index == 3)
                               ? Colors.black
                               : Colors.white),
                     ),
@@ -145,7 +157,7 @@ class _HomePageState extends State<HomePage>
                     child: Text(
                       'Maps',
                       style: TextStyle(
-                        color: (tabController?.index == 3)
+                        color: (tabController?.index == 4)
                             ? Colors.black
                             : Colors.white,
                       ),
@@ -165,6 +177,7 @@ class _HomePageState extends State<HomePage>
           // EmptyPage(),
           DataPage(),
           ChartPage(),
+          HistoricalPageCanti(),
           PhotoPage(),
           WebViewPage(),
         ],

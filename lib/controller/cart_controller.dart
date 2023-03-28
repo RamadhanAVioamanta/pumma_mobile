@@ -28,7 +28,7 @@ class CartController extends GetxController {
       await client.connect();
 
       // TODO: Add Here if have another data
-      client.subscribe('pummamqtt/canti', MqttQos.atLeastOnce);
+      client.subscribe('pumma/panjang', MqttQos.atLeastOnce);
       loadWaterLevel();
       loadBatteryVoltage();
       loadForecast();

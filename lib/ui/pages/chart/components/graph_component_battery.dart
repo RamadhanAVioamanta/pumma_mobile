@@ -51,8 +51,8 @@ class GraphComponentBattery extends StatelessWidget {
                   ],
                 ),
                 SfCartesianChart(
-                  series: <LineSeries<WaterLevel, DateTime>>[
-                    LineSeries<WaterLevel, DateTime>(
+                  series: <SplineSeries<WaterLevel, DateTime>>[
+                    SplineSeries<WaterLevel, DateTime>(
                       dataSource: chartData,
                       color: const Color.fromARGB(255, 30, 255, 0),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,

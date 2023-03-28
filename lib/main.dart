@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
@@ -15,6 +16,8 @@ import 'dart:async';
 import 'package:untitled/notification/notification_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'notification/notif.dart';
 import 'ui/widgets/widget.dart';
@@ -185,14 +188,14 @@ class _MainPageState extends State<MainPage> {
                       // cardmenu digunakan untuk membuat widget yang berisi gambar judul dan sebuath fungsi ketika widget ini di tekan
                       CardMenu(
                         assetImage: "assets/app_logo.png",
-                        title: "PUMMA Canti",
+                        title: "PUMMA U-TEWS Panjang",
                         onTap: () {
                           Get.to(() => HomePage());
                         },
                       ),
                       CardMenu(
                         assetImage: "assets/app_logo.png",
-                        title: "PUMMA Patengoran",
+                        title: "PUMMA U-TEWS Petengoran",
                         onTap: () {
                           Get.to(() => PetengoranPage());
                         },
@@ -245,6 +248,7 @@ class CardMenu extends StatelessWidget {
                 ),
                 Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
