@@ -14,6 +14,7 @@ Timer? timer;
 List data = [];
 DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
+const String defaultUrl = "https://vps.isi-net.org/api/panjang/time/1?timer=hour";
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -24,11 +25,12 @@ class HistoricalPageCanti extends StatefulWidget {
 
 class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
+  String selectedValue = defaultUrl;    
   bool _isLoading = true;
 
-  void getData() async {
+  void getData(url) async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
+        Uri.parse(url), 
         headers: {"Accept": "application/json"});
     _isLoading = false;
     debugPrint(response.body);
@@ -42,7 +44,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   @override
   void initState() {
     super.initState();
-    getData();
+    getData(defaultUrl);
   }
 
   // CREATE CHART BY DATA FROM REST-API
@@ -61,9 +63,34 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
     ];
   }
 
+  // Dropdown items
+  List<DropdownMenuItem<String>> get dropdownItems{
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/panjang/time/1?timer=hour"),
+      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/time/12?timer=hour"),
+      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
+      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/time/3?timer=day"),
+      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/time/7?timer=day"),
+      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/time/30?timer=day"),
+    ];
+    return menuItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      DropdownButton(
+        items: dropdownItems, 
+        value: selectedValue,
+        onChanged: ((String? newValue){
+          setState(() {
+            _isLoading = true;
+            getData(newValue);
+            selectedValue = newValue!;
+          });
+          }
+        ),
+      ),
       SizedBox(
           height: 120,
           child: charts.TimeSeriesChart(
@@ -103,7 +130,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
                   label: Expanded(
                       child: Text('Water Level', textAlign: TextAlign.center)))
             ],
-            rowsPerPage: 10,
+            rowsPerPage: 8,
           ),
         ),
       ),
@@ -119,7 +146,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
                 setState(() {
                   _isLoading = true;
                 });
-                getData();
+                getData(selectedValue);
               }))
     ]);
   }

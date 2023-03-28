@@ -14,6 +14,7 @@ Timer? timer;
 List data = [];
 DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
+const String defaultUrl = "https://vps.isi-net.org/api/panjang/time/1?timer=hour";
 
 class HistoricalPagePetengoran extends StatefulWidget {
   const HistoricalPagePetengoran({Key? key}) : super(key: key);
@@ -24,11 +25,12 @@ class HistoricalPagePetengoran extends StatefulWidget {
 
 class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
     with SingleTickerProviderStateMixin {
+  String selectedValue = defaultUrl;  
   bool _isLoading = true;
 
-  void getData() async {
+  void getData(url) async {
     var response = await http.get(
-        Uri.parse("https://vps.isi-net.org/api/petengoran/time/24?timer=hour"),
+        Uri.parse(url),
         headers: {"Accept": "application/json"});
     _isLoading = false;
     debugPrint(response.body);
@@ -42,7 +44,7 @@ class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
   @override
   void initState() {
     super.initState();
-    getData();
+    getData(defaultUrl);
   }
 
   // CREATE CHART BY DATA FROM REST-API
@@ -61,9 +63,34 @@ class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
     ];
   }
 
+  // Dropdown items
+  List<DropdownMenuItem<String>> get dropdownItems{
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/panjang/time/1?timer=hour"),
+      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/time/12?timer=hour"),
+      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
+      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/time/3?timer=day"),
+      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/time/7?timer=day"),
+      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/time/30?timer=day"),
+    ];
+    return menuItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      DropdownButton(
+        items: dropdownItems, 
+        value: selectedValue,
+        onChanged: ((String? newValue){
+          setState(() {
+            _isLoading = true;
+            getData(newValue);
+            selectedValue = newValue!;
+          });
+          }
+        ),
+      ),
       SizedBox(
           height: 120,
           child: charts.TimeSeriesChart(
@@ -103,7 +130,7 @@ class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
                   label: Expanded(
                       child: Text('Water Level', textAlign: TextAlign.center)))
             ],
-            rowsPerPage: 10,
+            rowsPerPage: 8,
           ),
         ),
       ),
@@ -119,7 +146,7 @@ class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
                 setState(() {
                   _isLoading = true;
                 });
-                getData();
+                getData(selectedValue);
               }))
     ]);
   }
