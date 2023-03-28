@@ -58,18 +58,7 @@ class GraphComponentSeaWaterLevel extends StatelessWidget {
                       color: const Color.fromARGB(255, 30, 255, 0),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
                       yValueMapper: (WaterLevel data, _) => data.tinggi,
-                    ),
-                    SplineSeries<WaterLevel, DateTime>(
-                        dataSource: chartData,
-                        color: Color.fromARGB(255, 221, 0, 255),
-                        xValueMapper: (WaterLevel data, _) => data.timeStamp,
-                        yValueMapper: (WaterLevel data, _) => data.threshold),
-                    SplineSeries<WaterLevel, DateTime>(
-                        dataSource: chartData,
-                        color: Color.fromARGB(255, 255, 0, 0),
-                        xValueMapper: (WaterLevel data, _) => data.timeStamp,
-                        yValueMapper: (WaterLevel data, _) => data.rms),
-                    // dataLabelSettings: DataLabelSettings(isVisible: true)),
+                    ), // dataLabelSettings: DataLabelSettings(isVisible: true)),
                   ],
                   primaryXAxis: DateTimeAxis(
                       dateFormat: DateFormat('mm:ss'),

@@ -49,12 +49,24 @@ class GraphComponentForecast extends StatelessWidget {
                   ],
                 ),
                 SfCartesianChart(
-                  series: <LineSeries<WaterLevel, DateTime>>[
-                    LineSeries<WaterLevel, DateTime>(
+                  series: <SplineSeries<WaterLevel, DateTime>>[
+                    SplineSeries<WaterLevel, DateTime>(
+                      dataSource: chartData,
+                      color: Color.fromARGB(255, 238, 255, 0),
+                      xValueMapper: (WaterLevel data, _) => data.timeStamp,
+                      yValueMapper: (WaterLevel data, _) => data.frcst30,
+                    ),
+                    SplineSeries<WaterLevel, DateTime>(
+                      dataSource: chartData,
+                      color: Color.fromARGB(255, 0, 255, 242),
+                      xValueMapper: (WaterLevel data, _) => data.timeStamp,
+                      yValueMapper: (WaterLevel data, _) => data.rms,
+                    ),
+                    SplineSeries<WaterLevel, DateTime>(
                       dataSource: chartData,
                       color: Color.fromARGB(255, 255, 0, 102),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
-                      yValueMapper: (WaterLevel data, _) => data.frcst30,
+                      yValueMapper: (WaterLevel data, _) => data.threshold,
                     ),
                     // dataLabelSettings: DataLabelSettings(isVisible: true)),
                   ],
