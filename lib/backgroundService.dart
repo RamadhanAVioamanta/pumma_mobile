@@ -33,12 +33,7 @@ void onStart(ServiceInstance service) async {
   }
 
   // bring to foreground
-  Timer.periodic(const Duration(seconds: 30), (timer) async {
-    // mengambil state notif on/of
-    //debugPrint("Testing Notification");
-    /*NotificationService().showNotification(Random.secure().nextInt(1000000),
-        'peringatan dini, jarak sensor dengan ketinggian air', '', 1);*/
-  });
+  Timer.periodic(const Duration(seconds: 30), (timer) async {});
 }
 
 bool onIosBackground(ServiceInstance service) {

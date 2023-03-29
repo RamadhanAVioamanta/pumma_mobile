@@ -18,14 +18,6 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 5), () {
-      /*Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const HomePage(),
-        ),
-      );*/
-
-      // ignore: prefer_const_constructors
       Get.offAll(() => MainPage());
     });
   }

@@ -39,7 +39,6 @@ class GraphComponentForecast extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Text(
                         DateFormat('d MMM yyy, HH:mm').format(DateTime.now()),
-                        // convertDateTime(chartData[0].timeStamp!),
                         style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.normal,
@@ -68,7 +67,6 @@ class GraphComponentForecast extends StatelessWidget {
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
                       yValueMapper: (WaterLevel data, _) => data.threshold,
                     ),
-                    // dataLabelSettings: DataLabelSettings(isVisible: true)),
                   ],
                   primaryXAxis: DateTimeAxis(
                       dateFormat: DateFormat('mm:ss'),

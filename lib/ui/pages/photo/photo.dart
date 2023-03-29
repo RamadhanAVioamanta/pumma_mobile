@@ -12,8 +12,7 @@ class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
     return PhotoView(
-        imageProvider: NetworkImage("https://vps.isi-net.org/api/panjang/image")
-        //client.subscribe('topic/test', MqttQos.atLeastOnce).toString()),
-        );
+        imageProvider:
+            NetworkImage("https://vps.isi-net.org/api/panjang/image"));
   }
 }

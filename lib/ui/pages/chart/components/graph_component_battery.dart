@@ -58,7 +58,6 @@ class GraphComponentBattery extends StatelessWidget {
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
                       yValueMapper: (WaterLevel data, _) => data.tegangan,
                     ),
-                    // dataLabelSettings: DataLabelSettings(isVisible: true)),
                   ],
                   primaryXAxis: DateTimeAxis(
                       dateFormat: DateFormat('mm:ss'),

@@ -84,24 +84,7 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
               'peringatan dini, ketinggian air mencapai ${wlevel} cm',
               '',
               1);
-        }
-        /*if (double.parse((voltage)) <= 11) {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'tegangan baterai melemah, tegangan baterai saat ini sebesar ${voltage} V',
-              '',
-              1);
-        }
-        if (double.parse((suhu)) > 80) {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'suhu mikrokontroler tinggi, suhu mikrokontroler saat ini sebesar ${suhu} °C',
-              '',
-              1);
-        } */
-        else {
+        } else {
           debugPrint("ews not active");
         }
       });

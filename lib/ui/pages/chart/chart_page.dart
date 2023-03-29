@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:untitled/controller/cart_controller.dart';
 import 'package:untitled/ui/pages/chart/components/graph_component_forecast.dart';
-import 'package:untitled/ui/pages/chart/components/graph_component_seaRms.dart';
 import 'components/graph_component_battery.dart';
 import 'components/graph_component_sea.dart';
 
@@ -25,13 +24,6 @@ class ChartPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Obx(
-              () => GraphComponentSeaRms(
-                chartData: controller.dataRms.toList(),
-                yTitle: 'Forecast Water Level (Cm)',
-              ),
-            ),
-            const SizedBox(height: 12),
-            Obx(
               () => GraphComponentForecast(
                 chartData: controller.dataForecast.toList(),
                 yTitle: 'Forecast Water Level (Cm)',
@@ -45,19 +37,6 @@ class ChartPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            /*Obx(
-              () => GraphComponentForecast(
-                chartData: controller.dataWaterLevel.toList(),
-                yTitle: 'Air Humidity (%)',
-              ),
-            ),
-            const SizedBox(height: 12),
-            Obx(
-              () => GraphComponentPressure(
-                chartData: controller.dataPressure.value,
-                yTitle: 'Air Pressure (hPa)',
-              ),
-            ),*/
           ],
         ),
       ),

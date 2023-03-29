@@ -42,7 +42,6 @@ class GraphComponentSeaWaterLevel extends StatelessWidget {
                         DateFormat('d MMM yyy, HH:mm:ss')
                                 .format(DateTime.now()) +
                             ' (UTC+7)',
-                        // convertDateTime(chartData[0].timeStamp!),
                         style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.normal,
@@ -58,7 +57,7 @@ class GraphComponentSeaWaterLevel extends StatelessWidget {
                       color: const Color.fromARGB(255, 30, 255, 0),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
                       yValueMapper: (WaterLevel data, _) => data.tinggi,
-                    ), // dataLabelSettings: DataLabelSettings(isVisible: true)),
+                    ),
                   ],
                   primaryXAxis: DateTimeAxis(
                       dateFormat: DateFormat('mm:ss'),

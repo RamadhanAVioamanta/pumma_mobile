@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/core/app_color.dart';
 import 'package:untitled/ui/pages/all/data/data_page_petengoran.dart';
-import 'package:untitled/ui/pages/chart/chart_page.dart';
 import 'package:untitled/ui/pages/chart/chart_page_petengoran.dart';
 import 'package:untitled/ui/pages/historical/historical_page_petengoran.dart';
 import 'package:untitled/ui/pages/photo/photo.dart';
 import 'package:untitled/ui/pages/webview/webview_page.dart';
-
-import '../all/data/data_page.dart';
 
 class PetengoranPage extends StatefulWidget {
   const PetengoranPage({Key? key}) : super(key: key);
@@ -22,14 +19,9 @@ class _PetengoranPageState extends State<PetengoranPage>
 
   @override
   void initState() {
-    // connectClientMtqq();
     tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
-
-  // connectClientMtqq() async {
-  //   await connectClient();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -61,43 +53,6 @@ class _PetengoranPageState extends State<PetengoranPage>
                 ),
               ),
               SizedBox(height: 10),
-              /*GestureDetector(
-                onTap: () {
-                  BottomSheetHelper.rounded(
-                    context,
-                    child: const ChoosePummaBottomSheet(
-                      data: [
-                        'PUMMA Canti',
-                        'PUMMA Petengoran',
-                      ],
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'Pilih titik lokasi PUMMA',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Icon(Icons.arrow_drop_down_outlined, color: Colors.white)
-                    ],
-                  ),
-                ),
-              ),*/
               TabBar(
                 controller: tabController,
                 isScrollable: false,
@@ -173,8 +128,6 @@ class _PetengoranPageState extends State<PetengoranPage>
         controller: tabController,
         physics: const NeverScrollableScrollPhysics(),
         children: const [
-          // TODO: Uncomment this for preview empty
-          // EmptyPage(),
           DataPagePetengoran(),
           ChartPagePetengoran(),
           HistoricalPagePetengoran(),

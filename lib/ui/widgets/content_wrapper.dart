@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 
-/* Created by
-   Varcant
-   nanda.kista@gmail.com
-*/
-
-/// Use this widget for give base padding every content in page.
-/// not required when your page is list
 class ContentWrapper extends StatelessWidget {
   final Widget? child;
   final bool top;

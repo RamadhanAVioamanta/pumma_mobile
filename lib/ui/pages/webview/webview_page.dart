@@ -37,10 +37,6 @@ class _WebViewPageState extends State<WebViewPage> {
             });
           }),
         ),
-        /*Visibility(
-          visible: isLoading,
-          child: const Center(),
-        )*/
       ],
     );
   }

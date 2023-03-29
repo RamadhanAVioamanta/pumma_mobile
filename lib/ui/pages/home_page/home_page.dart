@@ -3,7 +3,6 @@ import 'package:untitled/core/app_color.dart';
 import 'package:untitled/ui/pages/chart/chart_page.dart';
 import 'package:untitled/ui/pages/photo/photo.dart';
 import 'package:untitled/ui/pages/webview/webview_page.dart';
-import 'package:untitled/ui/widgets/widget.dart';
 
 import '../all/data/data_page.dart';
 import '../historical/historical_page_canti.dart';

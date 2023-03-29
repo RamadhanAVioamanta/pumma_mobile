@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -141,9 +139,6 @@ class ChartControllerPetengoran extends GetxController {
   // --------------------------------------------------------
   RxList<WaterLevel> dataWaterLevel = <WaterLevel>[].obs;
   RxList<WaterLevel> dataForecast = <WaterLevel>[].obs;
-  RxList<Data> dataPressure = <Data>[].obs;
-  RxList<Data> dataHumidity = <Data>[].obs;
-  RxList<Data> dataTemp = <Data>[].obs;
   RxList<WaterLevel> dataBatteryVoltage = <WaterLevel>[].obs;
   RxList<WaterLevel> dataThreshold = <WaterLevel>[].obs;
   RxList<WaterLevel> dataRms = <WaterLevel>[].obs;
@@ -171,46 +166,9 @@ class ChartControllerPetengoran extends GetxController {
 
   void refreshData() async {
     try {
-      // TODO: Uncomment code below if you want use Dummy Data
-      // updateWaterLevel(
-      //   waterLevel: WaterLevel(
-      //     tinggi: Random().nextInt(2000).toDouble(),
-      //     timeStamp: DateTime.now(),
-      //   ),
-      // );
-      updatePressure();
-      updateHumidity();
-      updateTemperature();
       refreshData();
-
-      //Future.delayed(const Duration(seconds: 1), () async {
-      //  refreshData();
-      //});
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
-
-  updatePressure() {
-    Data newPressure = Data(
-      value: Random().nextInt(2000).toString(),
-      timeStamp: DateTime.now(),
-    );
-    dataPressure.add(newPressure);
-    if (dataPressure.length > 50) dataPressure.removeAt(0);
-  }
-
-  updateHumidity() {
-    Data newHumidity = Data(
-        value: Random().nextInt(100).toString(), timeStamp: DateTime.now());
-    dataHumidity.add(newHumidity);
-    if (dataHumidity.length > 10) dataHumidity.removeAt(0);
-  }
-
-  updateTemperature() {
-    Data newTemp = Data(
-        value: Random().nextInt(100).toString(), timeStamp: DateTime.now());
-    dataTemp.add(newTemp);
-    if (dataTemp.length > 10) dataTemp.removeAt(0);
   }
 }
