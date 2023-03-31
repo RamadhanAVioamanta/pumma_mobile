@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled/data/models/server/water_level.dart';
 import 'package:untitled/data/network/mqtt_client.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class _DataPageState extends State<DataPage> {
   DateTime now = DateTime.now();
   Timer? timer;
 
-  var wlevel = "0";
+var wlevel = "0";
   var voltage = "0";
   var suhu = "0";
   var TS = "0";
@@ -46,6 +47,26 @@ class _DataPageState extends State<DataPage> {
     loadData();
     refresh();
     timeNow();
+
+    loadCounter();
+  }
+
+  Future<void> loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+        wlevel = (prefs.getString('wlevel_pj') ?? "120.1");
+        voltage = (prefs.getString('voltage_pj') ?? "13.1");
+        suhu = (prefs.getString('suhu_pj') ?? "39");
+    });
+  }
+
+  Future<void> incrementCounter(wlevel, voltage, suhu) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setString('wlevel_pj', wlevel);
+      prefs.setString('voltage_pj', voltage);
+      prefs.setString('suhu_pj', suhu);
+    });
   }
 
   void updateDataSource(Timer timer) {
@@ -75,6 +96,8 @@ class _DataPageState extends State<DataPage> {
       TS = (datamq['TS'].toString());
       debugPrint('DATAPAGE : ${datamq.toString()}');
       status = (datamq['status'].toString());
+
+      incrementCounter(wlevel, voltage, suhu);
 
       Future.delayed(Duration(seconds: 10), () {
         if (status == 'WARNING') {

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled/core/app_color.dart';
 import 'package:untitled/ui/pages/all/widgets/data_wrapper_widget.dart';
 import 'package:untitled/notification/notification_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DataPagePetengoran extends StatefulWidget {
   const DataPagePetengoran({Key? key}) : super(key: key);
@@ -35,6 +36,7 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
   var datamq;
   var status;
 
+
   @override
   void initState() {
     timer = Timer.periodic(const Duration(seconds: 1), updateDataSource);
@@ -46,6 +48,26 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
     loadData();
     refresh();
     timeNow();
+
+    loadCounter();
+  }
+
+  Future<void> loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+        wlevel = (prefs.getString('wlevel_ptg') ?? "120.1");
+        voltage = (prefs.getString('voltage_ptg') ?? "13.1");
+        suhu = (prefs.getString('suhu_ptg') ?? "39");
+    });
+  }
+
+  Future<void> incrementCounter(wlevel, voltage, suhu) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setString('wlevel_ptg', wlevel);
+      prefs.setString('voltage_ptg', voltage);
+      prefs.setString('suhu_ptg', suhu);
+    });
   }
 
   void updateDataSource(Timer timer) {
@@ -76,6 +98,8 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
       debugPrint('DATAPAGE : ${datamq.toString()}');
       status = (datamq['status'].toString());
 
+      incrementCounter(wlevel, voltage, suhu);
+
       Future.delayed(Duration(seconds: 10), () {
         if (status == 'WARNING') {
           debugPrint("WARNING - ews is active");
@@ -85,39 +109,11 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
               '',
               1);
         }
-        /*if (double.parse((voltage)) <= 11) {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'tegangan baterai melemah, tegangan baterai saat ini sebesar ${voltage} V',
-              '',
-              1);
-        }
-        if (double.parse((suhu)) > 80) {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'suhu mikrokontroler tinggi, suhu mikrokontroler saat ini sebesar ${suhu} °C',
-              '',
-              1);
-        } */
         else {
           debugPrint("ews not active");
         }
       });
     });
-  }
-
-  updateData(
-      {required WaterLevel waterLevel,
-      required WaterLevel battery,
-      required WaterLevel suhu}) {
-    dataWaterLevel.add(waterLevel);
-    if (dataWaterLevel.length > 50) dataWaterLevel.removeAt(0);
-    dataBatteryVoltage.add(battery);
-    if (dataBatteryVoltage.length > 50) dataBatteryVoltage.removeAt(0);
-    dataSuhu.add(suhu);
-    if (dataSuhu.length > 50) dataSuhu.removeAt(0);
   }
 
   @override
