@@ -14,7 +14,7 @@ Timer? timer;
 List data = [];
 DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
-const String defaultUrl = "https://vps.isi-net.org/api/panjang/time/1?timer=hour";
+const String defaultUrl = "https://vps.isi-net.org/api/panjang/time/1?timer=hour&data=waterlevel";
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -66,12 +66,12 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   // Dropdown items
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/panjang/time/1?timer=hour"),
-      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/time/12?timer=hour"),
-      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/time/24?timer=hour"),
-      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/time/3?timer=day"),
-      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/time/7?timer=day"),
-      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/time/30?timer=day"),
+      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/panjang/time/1?timer=hour&data=waterlevel"),
+      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/time/12?timer=hour&data=waterlevel"),
+      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/time/24?timer=hour&data=waterlevel"),
+      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/time/3?timer=day&data=waterlevel"),
+      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/time/7?timer=day&data=waterlevel"),
+      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/time/30?timer=day&data=waterlevel"),
     ];
     return menuItems;
   }
