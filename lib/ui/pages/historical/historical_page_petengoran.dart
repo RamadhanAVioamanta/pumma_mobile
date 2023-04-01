@@ -14,7 +14,7 @@ Timer? timer;
 List data = [];
 DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
-const String defaultUrl = "https://vps.isi-net.org/api/petengoran/time/1?timer=hour&data=waterlevel";
+const String defaultUrl = "https://vps.isi-net.org/api/petengoran/list/1?timer=hour&data=waterlevel";
 
 class HistoricalPagePetengoran extends StatefulWidget {
   const HistoricalPagePetengoran({Key? key}) : super(key: key);
@@ -66,12 +66,12 @@ class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
   // Dropdown items
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/petengoran/time/1?timer=hour&data=waterlevel"),
-      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/petengoran/time/12?timer=hour&data=waterlevel"),
-      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/petengoran/time/24?timer=hour&data=waterlevel"),
-      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/petengoran/time/3?timer=day&data=waterlevel"),
-      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/petengoran/time/7?timer=day&data=waterlevel"),
-      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/petengoran/time/30?timer=day&data=waterlevel"),
+      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/petengoran/list/1?timer=hour&data=waterlevel"),
+      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/petengoran/list/12?timer=hour&data=waterlevel"),
+      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/petengoran/list/24?timer=hour&data=waterlevel"),
+      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/petengoran/list/3?timer=day&data=waterlevel"),
+      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/petengoran/list/7?timer=day&data=waterlevel"),
+      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/petengoran/list/30?timer=day&data=waterlevel"),
     ];
     return menuItems;
   }

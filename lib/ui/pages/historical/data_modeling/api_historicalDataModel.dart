@@ -16,9 +16,9 @@ class historycalModel {
   late DateTime datetime;
   late double data;
 
-  factory historycalModel.fromJson(Map<String, dynamic> json) =>
+  factory historycalModel.fromJson(List json) =>
       historycalModel(
-        datetime: DateTime.parse(json['utc']).toLocal(),
-        data: json['data'].toDouble(),
+        datetime: DateTime.parse(json[0]).toLocal(),
+        data: json[1].toDouble(),
       );
 }
