@@ -91,88 +91,94 @@ class _HistoricalPetengoranState extends State<HistoricalPagePetengoran>
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      DropdownButton(
-        items: dropdownItems, 
-        value: selectedValue,
-        onChanged: ((String? newValue){
-          setState(() {
-            _isLoading = true;
-            selectedValue = newValue!;
-            getData(newValue, selectedData);
-          });
-          }
-        ),
-      ),
-      DropdownButton(
-        items: dropDownData, 
-        value: selectedData,
-        onChanged: ((String? newData){
-          setState(() {
-            _isLoading = true;
-            selectedData = newData!;
-            getData(selectedValue, selectedData);
-          });
-          }
-        ),
-      ),
-      SizedBox(
-          height: 120,
-          child: charts.TimeSeriesChart(
-            _createSampleData(),
-            animate: false,
-            domainAxis: const charts.DateTimeAxisSpec(
-              tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
-                hour: charts.TimeFormatterSpec(
-                  format: 'hh:mm:ss',
-                  transitionFormat: 'hh:mm:ss',
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          DropdownButton(
+            items: dropdownItems, 
+            value: selectedValue,
+            onChanged: ((String? newValue){
+              setState(() {
+                _isLoading = true;
+                getData(newValue, selectedData);
+                selectedValue = newValue!;
+              });
+              }
+            ),
+          ),
+          // DropdownButton(
+          //   items: dropDownData, 
+          //   value: selectedData,
+          //   onChanged: ((String? newData){
+          //     setState(() {
+          //       _isLoading = true;
+          //       selectedData = newData!;
+          //       getData(selectedValue, selectedData);
+          //     });
+          //     }
+          //   ),
+          // )
+          ]),
+          SizedBox(
+              height: 120,
+              child: charts.TimeSeriesChart(
+                _createSampleData(),
+                animate: false,
+                domainAxis: const charts.DateTimeAxisSpec(
+                  tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+                    hour: charts.TimeFormatterSpec(
+                      format: 'hh:mm:ss',
+                      transitionFormat: 'hh:mm:ss',
+                    ),
+                    day: charts.TimeFormatterSpec(
+                      format: 'dd MMM',
+                      transitionFormat: 'dd MMM',
+                    ),
+                  ),
                 ),
-                day: charts.TimeFormatterSpec(
-                  format: 'dd MMM',
-                  transitionFormat: 'dd MMM',
-                ),
+              )),
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: PaginatedDataTable(
+                source: _data,
+                horizontalMargin: 20,
+                dataRowHeight: 39,
+                columns: const [
+                  DataColumn(
+                      label: Expanded(
+                          child: Text(
+                    'Date',
+                    textAlign: TextAlign.center,
+                  ))),
+                  DataColumn(
+                      label: Expanded(
+                          child: Text('Time', textAlign: TextAlign.center))),
+                  DataColumn(
+                      label: Expanded(
+                          child: Text('Water Level', textAlign: TextAlign.center)))
+                ],
+                rowsPerPage: 7,
               ),
             ),
-          )),
-      Expanded(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: PaginatedDataTable(
-            source: _data,
-            horizontalMargin: 20,
-            dataRowHeight: 39,
-            columns: const [
-              DataColumn(
-                  label: Expanded(
-                      child: Text(
-                'Date',
-                textAlign: TextAlign.center,
-              ))),
-              DataColumn(
-                  label: Expanded(
-                      child: Text('Time', textAlign: TextAlign.center))),
-              DataColumn(
-                  label: Expanded(
-                      child: Text('Water Level', textAlign: TextAlign.center)))
-            ],
-            rowsPerPage: 8,
           ),
-        ),
-      ),
-      Container(
-          child: TextButton(
-              style: TextButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              child: !_isLoading
-                  ? const Text('Refresh')
-                  : const CircularProgressIndicator(),
-              onPressed: () async {
-                setState(() {
-                  _isLoading = true;
-                });
-                getData(selectedValue, selectedData);
-              }))
-    ]);
+          Container(
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  child: !_isLoading
+                      ? const Text('Refresh')
+                      : const CircularProgressIndicator(),
+                  onPressed: () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    getData(selectedValue, selectedData);
+                  }))
+        ],
+      );
   }
 }
 
