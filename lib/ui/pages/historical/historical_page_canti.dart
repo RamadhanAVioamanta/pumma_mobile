@@ -14,7 +14,8 @@ Timer? timer;
 List data = [];
 DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
-const String defaultUrl = "https://vps.isi-net.org/api/panjang/list/1?timer=hour&data=waterlevel";
+const String defaultUrl = "https://vps.isi-net.org/api/panjang/list/1?timer=hour&data=";
+String selectedData = "waterlevel";
 
 class HistoricalPageCanti extends StatefulWidget {
   const HistoricalPageCanti({Key? key}) : super(key: key);
@@ -28,9 +29,9 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   String selectedValue = defaultUrl;    
   bool _isLoading = true;
 
-  void getData(url) async {
+  void getData(url, data) async {
     var response = await http.get(
-        Uri.parse(url), 
+        Uri.parse(url + selectedData), 
         headers: {"Accept": "application/json"});
     _isLoading = false;
     debugPrint(response.body);
@@ -44,7 +45,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   @override
   void initState() {
     super.initState();
-    getData(defaultUrl);
+    getData(defaultUrl, selectedData);
   }
 
   // CREATE CHART BY DATA FROM REST-API
@@ -66,12 +67,23 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   // Dropdown items
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("1 Hour"),value: "https://vps.isi-net.org/api/panjang/list/1?timer=hour&data=waterlevel"),
-      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/list/12?timer=hour&data=waterlevel"),
-      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/list/24?timer=hour&data=waterlevel"),
-      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/list/3?timer=day&data=waterlevel"),
-      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/list/7?timer=day&data=waterlevel"),
-      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/list/30?timer=day&data=waterlevel"),
+      DropdownMenuItem(child: Text("1 Hour"),value: 'https://vps.isi-net.org/api/panjang/list/1?timer=hour&data='),
+      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/list/12?timer=hour&data="),
+      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/list/24?timer=hour&data="),
+      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/list/3?timer=day&data="),
+      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/list/7?timer=day&data="),
+      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/list/30?timer=day&data="),
+    ];
+    return menuItems;
+  }
+
+  List<DropdownMenuItem<String>> get dropDownData{
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Waterlevel"),value: "waterlevel"),
+      DropdownMenuItem(child: Text("Voltage"),value: "voltage"),
+      DropdownMenuItem(child: Text("Temperature"),value: "temperature"),
+      DropdownMenuItem(child: Text("Forecast 30"),value: "forecast30"),
+      DropdownMenuItem(child: Text("Forecast 300"),value: "forecast300"),
     ];
     return menuItems;
   }
@@ -85,8 +97,20 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
         onChanged: ((String? newValue){
           setState(() {
             _isLoading = true;
-            getData(newValue);
+            getData(newValue, selectedData);
             selectedValue = newValue!;
+          });
+          }
+        ),
+      ),
+      DropdownButton(
+        items: dropDownData, 
+        value: selectedData,
+        onChanged: ((String? newData){
+          setState(() {
+            _isLoading = true;
+            selectedData = newData!;
+            getData(selectedValue, selectedData);
           });
           }
         ),
@@ -130,7 +154,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
                   label: Expanded(
                       child: Text('Water Level', textAlign: TextAlign.center)))
             ],
-            rowsPerPage: 8,
+            rowsPerPage: 7,
           ),
         ),
       ),
@@ -146,7 +170,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
                 setState(() {
                   _isLoading = true;
                 });
-                getData(selectedValue);
+                getData(selectedValue, selectedData);
               }))
     ]);
   }
