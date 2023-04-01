@@ -10,15 +10,15 @@ List<historycalModel> dataAPIFromJson(List data) => List<historycalModel>.from(
 class historycalModel {
   historycalModel({
     required this.datetime,
-    required this.waterlevel,
+    required this.data,
   });
 
   late DateTime datetime;
-  late double waterlevel;
+  late double data;
 
   factory historycalModel.fromJson(Map<String, dynamic> json) =>
       historycalModel(
-        datetime: DateTime.parse(json['datetime_utc']).toLocal(),
-        waterlevel: json['waterlevel'].toDouble(),
+        datetime: DateTime.parse(json['utc']).toLocal(),
+        data: json['data'].toDouble(),
       );
 }

@@ -58,7 +58,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
         id: 'Water',
         colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
         domainFn: (historycalModel DataApi, _) => DataApi.datetime,
-        measureFn: (historycalModel DataApi, _) => DataApi.waterlevel.round(),
+        measureFn: (historycalModel DataApi, _) => DataApi.data.round(),
       )
     ];
   }
@@ -160,7 +160,7 @@ class MyData extends DataTableSource {
                 DateFormat('MM/dd/yyyy').format(historyData[index].datetime),
             "time":
                 DateFormat('hh:mm:ss a').format(historyData[index].datetime),
-            "waterlevel": historyData[index].waterlevel
+            "waterlevel": historyData[index].data
           });
 
   @override
