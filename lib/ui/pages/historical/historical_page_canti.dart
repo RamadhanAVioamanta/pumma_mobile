@@ -14,7 +14,8 @@ Timer? timer;
 List data = [];
 DataTableSource _data = MyData();
 List<historycalModel> historyData = dataAPIFromJson(data);
-const String defaultUrl = "https://vps.isi-net.org/api/panjang/list/1?timer=hour&data=";
+const String defaultUrl =
+    "https://vps.isi-net.org/api/panjang/list/1?timer=hour&data=";
 String selectedData = "waterlevel";
 
 class HistoricalPageCanti extends StatefulWidget {
@@ -26,12 +27,11 @@ class HistoricalPageCanti extends StatefulWidget {
 
 class _HistoricalCantiState extends State<HistoricalPageCanti>
     with SingleTickerProviderStateMixin {
-  String selectedValue = defaultUrl;    
+  String selectedValue = defaultUrl;
   bool _isLoading = true;
 
   void getData(url, data) async {
-    var response = await http.get(
-        Uri.parse(url + selectedData), 
+    var response = await http.get(Uri.parse(url + selectedData),
         headers: {"Accept": "application/json"});
     _isLoading = false;
     debugPrint(response.body);
@@ -65,119 +65,134 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
   }
 
   // Dropdown items
-  List<DropdownMenuItem<String>> get dropdownItems{
+  List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("1 Hour"),value: 'https://vps.isi-net.org/api/panjang/list/1?timer=hour&data='),
-      DropdownMenuItem(child: Text("12 Hour"),value: "https://vps.isi-net.org/api/panjang/list/12?timer=hour&data="),
-      DropdownMenuItem(child: Text("24 Hours"),value: "https://vps.isi-net.org/api/panjang/list/24?timer=hour&data="),
-      DropdownMenuItem(child: Text("3 Days"),value: "https://vps.isi-net.org/api/panjang/list/3?timer=day&data="),
-      DropdownMenuItem(child: Text("7 Days"),value: "https://vps.isi-net.org/api/panjang/list/7?timer=day&data="),
-      DropdownMenuItem(child: Text("30 Days"),value: "https://vps.isi-net.org/api/panjang/list/30?timer=day&data="),
+      DropdownMenuItem(
+          child: Text("1 Hour"),
+          value: 'https://vps.isi-net.org/api/panjang/list/1?timer=hour&data='),
+      DropdownMenuItem(
+          child: Text("12 Hour"),
+          value:
+              "https://vps.isi-net.org/api/panjang/list/12?timer=hour&data="),
+      DropdownMenuItem(
+          child: Text("24 Hours"),
+          value:
+              "https://vps.isi-net.org/api/panjang/list/24?timer=hour&data="),
+      DropdownMenuItem(
+          child: Text("3 Days"),
+          value: "https://vps.isi-net.org/api/panjang/list/3?timer=day&data="),
+      DropdownMenuItem(
+          child: Text("7 Days"),
+          value: "https://vps.isi-net.org/api/panjang/list/7?timer=day&data="),
+      DropdownMenuItem(
+          child: Text("30 Days"),
+          value: "https://vps.isi-net.org/api/panjang/list/30?timer=day&data="),
     ];
     return menuItems;
   }
 
-  List<DropdownMenuItem<String>> get dropDownData{
+  List<DropdownMenuItem<String>> get dropDownData {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Waterlevel"),value: "waterlevel"),
-      DropdownMenuItem(child: Text("Voltage"),value: "voltage"),
-      DropdownMenuItem(child: Text("Temperature"),value: "temperature"),
-      DropdownMenuItem(child: Text("Forecast 30"),value: "forecast30"),
-      DropdownMenuItem(child: Text("Forecast 300"),value: "forecast300"),
+      DropdownMenuItem(child: Text("Waterlevel"), value: "waterlevel"),
+      DropdownMenuItem(child: Text("Voltage"), value: "voltage"),
+      DropdownMenuItem(child: Text("Temperature"), value: "temperature"),
+      DropdownMenuItem(child: Text("Forecast 30"), value: "forecast30"),
+      DropdownMenuItem(child: Text("Forecast 300"), value: "forecast300"),
     ];
     return menuItems;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DropdownButton(
-            items: dropdownItems, 
-            value: selectedValue,
-            onChanged: ((String? newValue){
-              setState(() {
-                _isLoading = true;
-                getData(newValue, selectedData);
-                selectedValue = newValue!;
-              });
-              }
-            ),
-          ),
-          DropdownButton(
-            items: dropDownData, 
-            value: selectedData,
-            onChanged: ((String? newData){
-              setState(() {
-                _isLoading = true;
-                selectedData = newData!;
-                getData(selectedValue, selectedData);
-              });
-              }
-            ),
-          )]),
-          SizedBox(
-              height: 120,
-              child: charts.TimeSeriesChart(
-                _createSampleData(),
-                animate: false,
-                domainAxis: const charts.DateTimeAxisSpec(
-                  tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
-                    hour: charts.TimeFormatterSpec(
-                      format: 'hh:mm:ss',
-                      transitionFormat: 'hh:mm:ss',
-                    ),
-                    day: charts.TimeFormatterSpec(
-                      format: 'dd MMM',
-                      transitionFormat: 'dd MMM',
-                    ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DropdownButton(
+                items: dropdownItems,
+                value: selectedValue,
+                onChanged: ((String? newValue) {
+                  setState(() {
+                    _isLoading = true;
+                    getData(newValue, selectedData);
+                    selectedValue = newValue!;
+                  });
+                }),
+              ),
+              DropdownButton(
+                items: dropDownData,
+                value: selectedData,
+                onChanged: ((String? newData) {
+                  setState(() {
+                    _isLoading = true;
+                    selectedData = newData!;
+                    getData(selectedValue, selectedData);
+                  });
+                }),
+              )
+            ]),
+        SizedBox(
+            height: 120,
+            child: charts.TimeSeriesChart(
+              _createSampleData(),
+              animate: false,
+              domainAxis: const charts.DateTimeAxisSpec(
+                tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+                  hour: charts.TimeFormatterSpec(
+                    format: 'hh:mm:ss',
+                    transitionFormat: 'hh:mm:ss',
+                  ),
+                  day: charts.TimeFormatterSpec(
+                    format: 'dd MMM',
+                    transitionFormat: 'dd MMM',
                   ),
                 ),
-              )),
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: PaginatedDataTable(
-                source: _data,
-                horizontalMargin: 20,
-                dataRowHeight: 39,
-                columns: const [
-                  DataColumn(
-                      label: Expanded(
-                          child: Text(
-                    'Date',
-                    textAlign: TextAlign.center,
-                  ))),
-                  DataColumn(
-                      label: Expanded(
-                          child: Text('Time', textAlign: TextAlign.center))),
-                  DataColumn(
-                      label: Expanded(
-                          child: Text('Water Level', textAlign: TextAlign.center)))
-                ],
-                rowsPerPage: 7,
               ),
+            )),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: PaginatedDataTable(
+              source: _data,
+              horizontalMargin: 20,
+              dataRowHeight: 39,
+              columns: const [
+                DataColumn(
+                    label: Expanded(
+                        child: Text(
+                  'Date',
+                  textAlign: TextAlign.center,
+                ))),
+                DataColumn(
+                    label: Expanded(
+                        child: Text('Time', textAlign: TextAlign.center))),
+                DataColumn(
+                    label: Expanded(
+                        child: Text('Value', textAlign: TextAlign.center)))
+              ],
+              rowsPerPage: 7,
             ),
           ),
-          Container(
-              child: TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                  ),
-                  child: !_isLoading
-                      ? const Text('Refresh')
-                      : const CircularProgressIndicator(),
-                  onPressed: () async {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    getData(selectedValue, selectedData);
-                  }))
-        ],
-      );
+        ),
+        Container(
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                child: !_isLoading
+                    ? const Text('Refresh')
+                    : const CircularProgressIndicator(),
+                onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  getData(selectedValue, selectedData);
+                }))
+      ],
+    );
   }
 }
 

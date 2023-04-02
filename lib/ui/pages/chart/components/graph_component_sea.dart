@@ -52,9 +52,11 @@ class GraphComponentSeaWaterLevel extends StatelessWidget {
                   ],
                 ),
                 SfCartesianChart(
+                  enableAxisAnimation: false,
                   series: <SplineSeries>[
                     SplineSeries<WaterLevel, DateTime>(
                       dataSource: chartData,
+                      animationDuration: 0,
                       color: const Color.fromARGB(255, 30, 255, 0),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
                       yValueMapper: (WaterLevel data, _) => data.tinggi,

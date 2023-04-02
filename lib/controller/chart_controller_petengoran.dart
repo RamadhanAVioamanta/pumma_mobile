@@ -39,6 +39,7 @@ class ChartControllerPetengoran extends GetxController {
     } catch (e) {
       debugPrint('Errornya karena : $e');
       client.disconnect();
+      Future.delayed(Duration(seconds: 5), () => client.connect());
     }
     super.onReady();
   }

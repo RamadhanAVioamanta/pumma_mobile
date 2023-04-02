@@ -106,27 +106,27 @@ class CartController extends GetxController {
   updateWaterLevel({required WaterLevel waterLevel}) {
     dataWaterLevel.add(waterLevel);
     debugPrint('connect bro');
-    if (dataWaterLevel.length > 50) dataWaterLevel.removeAt(0);
+    if (dataWaterLevel.length > 25) dataWaterLevel.removeAt(0);
   }
 
   updateBatteryVoltage({required WaterLevel batteryVoltage}) {
     dataBatteryVoltage.add(batteryVoltage);
-    if (dataBatteryVoltage.length > 50) dataBatteryVoltage.removeAt(0);
+    if (dataBatteryVoltage.length > 25) dataBatteryVoltage.removeAt(0);
   }
 
   updateForecast({required WaterLevel forecastWater}) {
     dataForecast.add(forecastWater);
-    if (dataForecast.length > 50) dataForecast.removeAt(0);
+    if (dataForecast.length > 25) dataForecast.removeAt(0);
   }
 
   updateThreshold({required WaterLevel thresholdWarning}) {
     dataThreshold.add(thresholdWarning);
-    if (dataThreshold.length > 50) dataThreshold.removeAt(0);
+    if (dataThreshold.length > 25) dataThreshold.removeAt(0);
   }
 
   updateRms({required WaterLevel rmsValue}) {
     dataRms.add(rmsValue);
-    if (dataRms.length > 50) dataRms.removeAt(0);
+    if (dataRms.length > 25) dataRms.removeAt(0);
   }
 
   @override

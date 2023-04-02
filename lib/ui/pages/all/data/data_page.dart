@@ -81,6 +81,7 @@ class _DataPageState extends State<DataPage> {
     } catch (e) {
       debugPrint(e.toString());
       client2.disconnect();
+      Future.delayed(Duration(seconds: 5), () => client2.connect());
     }
   }
 

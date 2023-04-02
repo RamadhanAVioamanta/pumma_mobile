@@ -81,6 +81,7 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
     } catch (e) {
       debugPrint(e.toString());
       client2.disconnect();
+      Future.delayed(Duration(seconds: 5), () => client2.connect());
     }
   }
 
