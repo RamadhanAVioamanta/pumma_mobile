@@ -36,7 +36,6 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
   var datamq;
   var status;
 
-
   @override
   void initState() {
     timer = Timer.periodic(const Duration(seconds: 1), updateDataSource);
@@ -55,9 +54,9 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
   Future<void> loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-        wlevel = (prefs.getString('wlevel_ptg') ?? "120.1");
-        voltage = (prefs.getString('voltage_ptg') ?? "13.1");
-        suhu = (prefs.getString('suhu_ptg') ?? "39");
+      wlevel = (prefs.getString('wlevel_ptg') ?? "120.1");
+      voltage = (prefs.getString('voltage_ptg') ?? "13.1");
+      suhu = (prefs.getString('suhu_ptg') ?? "39");
     });
   }
 
@@ -82,6 +81,7 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
     } catch (e) {
       debugPrint(e.toString());
       client2.disconnect();
+      Future.delayed(Duration(seconds: 5), () => client2.connect());
     }
   }
 
@@ -108,8 +108,7 @@ class _DataPagePetengoranState extends State<DataPagePetengoran> {
               'peringatan dini, ketinggian air mencapai ${wlevel} cm',
               '',
               1);
-        }
-        else {
+        } else {
           debugPrint("ews not active");
         }
       });

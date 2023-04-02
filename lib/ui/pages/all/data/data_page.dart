@@ -29,7 +29,7 @@ class _DataPageState extends State<DataPage> {
   DateTime now = DateTime.now();
   Timer? timer;
 
-var wlevel = "0";
+  var wlevel = "0";
   var voltage = "0";
   var suhu = "0";
   var TS = "0";
@@ -54,9 +54,9 @@ var wlevel = "0";
   Future<void> loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-        wlevel = (prefs.getString('wlevel_pj') ?? "120.1");
-        voltage = (prefs.getString('voltage_pj') ?? "13.1");
-        suhu = (prefs.getString('suhu_pj') ?? "39");
+      wlevel = (prefs.getString('wlevel_pj') ?? "120.1");
+      voltage = (prefs.getString('voltage_pj') ?? "13.1");
+      suhu = (prefs.getString('suhu_pj') ?? "39");
     });
   }
 
@@ -81,6 +81,7 @@ var wlevel = "0";
     } catch (e) {
       debugPrint(e.toString());
       client2.disconnect();
+      Future.delayed(Duration(seconds: 5), () => client2.connect());
     }
   }
 
