@@ -45,67 +45,81 @@ class CartController extends GetxController {
 
   loadWaterLevel() {
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
-      final payload =
-          MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      final data = waterLevelFromJson(payload);
-      waterLevel.value = data;
-      updateWaterLevel(waterLevel: waterLevel.value!);
-      debugPrint('$tag payload = ${waterLevel.toJson()}');
+      var topic = c[0].topic;
+      if (topic == "pumma/panjang") {
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        final data = waterLevelFromJson(payload);
+        waterLevel.value = data;
+        updateWaterLevel(waterLevel: waterLevel.value!);
+        debugPrint('$tag payload = ${waterLevel.toJson()}');
+      }
     });
   }
 
   loadBatteryVoltage() {
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
-      final payload =
-          MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      final data = waterLevelFromJson(payload);
-      tegangan.value = data;
-      updateBatteryVoltage(batteryVoltage: tegangan.value!);
-      debugPrint('$tag payload = ${tegangan.toJson()}');
+      var topic = c[0].topic;
+      if (topic == "pumma/panjang") {
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        final data = waterLevelFromJson(payload);
+        tegangan.value = data;
+        updateBatteryVoltage(batteryVoltage: tegangan.value!);
+        debugPrint('$tag payload = ${tegangan.toJson()}');
+      }
     });
   }
 
   loadForecast() {
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
-      final payload =
-          MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      final data = waterLevelFromJson(payload);
-      forecast.value = data;
-      updateForecast(forecastWater: forecast.value!);
-      debugPrint('$tag payload = ${forecast.toJson()}');
+      var topic = c[0].topic;
+      if (topic == "pumma/panjang") {
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        final data = waterLevelFromJson(payload);
+        forecast.value = data;
+        updateForecast(forecastWater: forecast.value!);
+        debugPrint('$tag payload = ${forecast.toJson()}');
+      }
     });
   }
 
   loadThreshold() {
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
-      final payload =
-          MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      final data = waterLevelFromJson(payload);
-      threshold.value = data;
-      updateThreshold(thresholdWarning: threshold.value!);
-      debugPrint('$tag payload = ${threshold.toJson()}');
+      var topic = c[0].topic;
+      if (topic == "pumma/panjang") {
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        final data = waterLevelFromJson(payload);
+        threshold.value = data;
+        updateThreshold(thresholdWarning: threshold.value!);
+        debugPrint('$tag payload = ${threshold.toJson()}');
+      }
     });
   }
 
   loadRms() {
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
-      final payload =
-          MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      final data = waterLevelFromJson(payload);
-      rms.value = data;
-      updateRms(rmsValue: rms.value!);
-      debugPrint('$tag payload = ${rms.toJson()}');
+      var topic = c[0].topic;
+      if (topic == "pumma/panjang") {
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        final data = waterLevelFromJson(payload);
+        rms.value = data;
+        updateRms(rmsValue: rms.value!);
+        debugPrint('$tag payload = ${rms.toJson()}');
+      }
     });
   }
 
   updateWaterLevel({required WaterLevel waterLevel}) {
     dataWaterLevel.add(waterLevel);
-    debugPrint('connect bro');
     if (dataWaterLevel.length > 25) dataWaterLevel.removeAt(0);
   }
 
