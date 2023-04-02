@@ -25,13 +25,6 @@ class ChartPagePetengoran extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Obx(
-              () => GraphComponentSeaRms(
-                chartData: controller.dataRms.toList(),
-                yTitle: 'Forecast Water Level (Cm)',
-              ),
-            ),
-            const SizedBox(height: 12),
-            Obx(
               () => GraphComponentForecast(
                 chartData: controller.dataForecast.toList(),
                 yTitle: 'Forecast Water Level (Cm)',

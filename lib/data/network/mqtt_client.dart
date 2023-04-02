@@ -16,9 +16,7 @@ class MqttNetwork {
     client.pongCallback = pong;
     final connMessage = MqttConnectMessage()
         .authenticateAs('unila', 'pwdMQTT@123')
-        .withClientIdentifier("Mqtt_MyClientUniqueId")
-        .startClean()
-        .withWillQos(MqttQos.atLeastOnce);
+        .withClientIdentifier("Mqtt_MyClientUniqueId");
     client.connectionMessage = connMessage;
     return client;
   }
