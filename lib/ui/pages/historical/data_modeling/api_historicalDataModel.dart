@@ -9,31 +9,16 @@ List<historycalModel> dataAPIFromJson(List data) => List<historycalModel>.from(
 
 class historycalModel {
   historycalModel({
-    required this.id,
     required this.datetime,
-    required this.waterlevel,
-    required this.voltage,
-    required this.temperature,
-    required this.forecast30,
-    required this.forecast300,
+    required this.data,
   });
 
-  late int id;
   late DateTime datetime;
-  late double waterlevel;
-  late double voltage;
-  late double temperature;
-  late double forecast30;
-  late double forecast300;
+  late double data;
 
-  factory historycalModel.fromJson(Map<String, dynamic> json) =>
+  factory historycalModel.fromJson(List json) =>
       historycalModel(
-        id :  int.parse(json['id']) ,
-        datetime: DateTime.parse(json['datetime_utc']).toLocal(),
-        waterlevel: json['waterlevel'].toDouble(),
-        voltage: json['voltage'].toDouble(),
-        temperature: json['temperature'].toDouble(),
-        forecast30: json['forecast30'].toDouble(),
-        forecast300: json['forecast300'].toDouble(),
+        datetime: DateTime.parse(json[0]).toLocal(),
+        data: json[1].toDouble(),
       );
 }

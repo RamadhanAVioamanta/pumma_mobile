@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:untitled/ui/pages/home_page/home_page.dart';
 import 'package:untitled/ui/pages/home_page/petengoran_page.dart';
@@ -55,6 +56,7 @@ class _MainPageState extends State<MainPage> {
   late Box box;
   @override
   void initState() {
+    SharedPreferences.setMockInitialValues({});
     super.initState();
     // untuk membind data ketika widget dibuat
     WidgetsBinding.instance.addPostFrameCallback((_) {
