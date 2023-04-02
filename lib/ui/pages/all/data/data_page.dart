@@ -29,7 +29,7 @@ class _DataPageState extends State<DataPage> {
   DateTime now = DateTime.now();
   Timer? timer;
 
-var wlevel = "0";
+  var wlevel = "0";
   var voltage = "0";
   var suhu = "0";
   var TS = "0";
@@ -54,9 +54,9 @@ var wlevel = "0";
   Future<void> loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-        wlevel = (prefs.getString('wlevel_pj') ?? "120.1");
-        voltage = (prefs.getString('voltage_pj') ?? "13.1");
-        suhu = (prefs.getString('suhu_pj') ?? "39");
+      wlevel = (prefs.getString('wlevel_pj') ?? "120.1");
+      voltage = (prefs.getString('voltage_pj') ?? "13.1");
+      suhu = (prefs.getString('suhu_pj') ?? "39");
     });
   }
 
@@ -86,48 +86,34 @@ var wlevel = "0";
 
   loadData() {
     client2.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
-      final payload =
-          MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      datamq = jsonDecode(payload);
-      wlevel = (datamq['tinggi'].toString());
-      voltage = (datamq['tegangan'].toString());
-      suhu = (datamq['suhu'].toString());
-      TS = (datamq['TS'].toString());
-      debugPrint('DATAPAGE : ${datamq.toString()}');
-      status = (datamq['status'].toString());
+      var topic = c[0].topic;
+      if (topic == "pumma/panjang") {
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        datamq = jsonDecode(payload);
+        wlevel = (datamq['tinggi'].toString());
+        voltage = (datamq['tegangan'].toString());
+        suhu = (datamq['suhu'].toString());
+        TS = (datamq['TS'].toString());
+        debugPrint('DATAPAGE : ${datamq.toString()}');
+        status = (datamq['status'].toString());
 
-      incrementCounter(wlevel, voltage, suhu);
+        incrementCounter(wlevel, voltage, suhu);
 
-      Future.delayed(Duration(seconds: 10), () {
-        if (status == 'WARNING') {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'peringatan dini, ketinggian air mencapai ${wlevel} cm',
-              '',
-              1);
-        }
-        /*if (double.parse((voltage)) <= 11) {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'tegangan baterai melemah, tegangan baterai saat ini sebesar ${voltage} V',
-              '',
-              1);
-        }
-        if (double.parse((suhu)) > 80) {
-          debugPrint("WARNING - ews is active");
-          NotificationService().showNotification(
-              Random.secure().nextInt(1000000),
-              'suhu mikrokontroler tinggi, suhu mikrokontroler saat ini sebesar ${suhu} °C',
-              '',
-              1);
-        } */
-        else {
-          debugPrint("ews not active");
-        }
-      });
+        Future.delayed(Duration(seconds: 10), () {
+          if (status == 'WARNING') {
+            debugPrint("WARNING - ews is active");
+            NotificationService().showNotification(
+                Random.secure().nextInt(1000000),
+                'peringatan dini, ketinggian air mencapai ${wlevel} cm',
+                '',
+                1);
+          } else {
+            debugPrint("ews not active");
+          }
+        });
+      }
     });
   }
 
