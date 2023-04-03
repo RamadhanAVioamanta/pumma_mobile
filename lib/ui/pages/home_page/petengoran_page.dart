@@ -5,6 +5,7 @@ import 'package:untitled/ui/pages/chart/chart_page.dart';
 import 'package:untitled/ui/pages/chart/chart_page_petengoran.dart';
 import 'package:untitled/ui/pages/historical/historical_page_petengoran.dart';
 import 'package:untitled/ui/pages/photo/photo.dart';
+import 'package:untitled/ui/pages/photo/photo_petengoran.dart';
 
 import '../all/data/data_page.dart';
 import '../webview/webview_petengoran.dart';
@@ -178,7 +179,7 @@ class _PetengoranPageState extends State<PetengoranPage>
           DataPagePetengoran(),
           ChartPagePetengoran(),
           HistoricalPagePetengoran(),
-          PhotoPage(),
+          PhotoPagePetengoran(),
           WebViewPagePetengoran(),
         ],
       ),
