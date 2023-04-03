@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({Key? key}) : super(key: key);
+class WebViewPagePetengoran extends StatefulWidget {
+  const WebViewPagePetengoran({Key? key}) : super(key: key);
 
   @override
-  State<WebViewPage> createState() => _WebViewPageState();
+  State<WebViewPagePetengoran> createState() => _WebViewPagePetengoranState();
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _WebViewPagePetengoranState extends State<WebViewPagePetengoran> {
   bool isLoading = false;
 
   @override
@@ -24,7 +24,7 @@ class _WebViewPageState extends State<WebViewPage> {
     return Stack(
       children: [
         WebView(
-          initialUrl: 'https://www.google.com/maps/@-5.474367,105.3147636,16z',
+          initialUrl: 'https://www.google.com/maps/@-5.5664595,105.2417529,17z',
           javascriptMode: JavascriptMode.unrestricted,
           onProgress: (int progress) {
             setState(() {

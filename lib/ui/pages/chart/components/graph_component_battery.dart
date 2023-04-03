@@ -55,6 +55,8 @@ class GraphComponentBattery extends StatelessWidget {
                     SplineSeries<WaterLevel, DateTime>(
                       dataSource: chartData,
                       animationDuration: 0,
+                      markerSettings: MarkerSettings(isVisible: true),
+                      dataLabelSettings: DataLabelSettings(isVisible: true),
                       color: const Color.fromARGB(255, 30, 255, 0),
                       xValueMapper: (WaterLevel data, _) => data.timeStamp,
                       yValueMapper: (WaterLevel data, _) => data.tegangan,
