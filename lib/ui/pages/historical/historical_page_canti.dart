@@ -32,7 +32,7 @@ class _HistoricalCantiState extends State<HistoricalPageCanti>
 
   void getData(url, data) async {
     var response = await http.get(Uri.parse(url + selectedData),
-        headers: {"Accept": "application/json"});
+        headers: {"Accept": "application/json"}).timeout(const Duration(seconds: 60));
     _isLoading = false;
     debugPrint(response.body);
     List data = json.decode(response.body)['result'];
